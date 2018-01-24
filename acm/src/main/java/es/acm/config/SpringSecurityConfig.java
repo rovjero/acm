@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 @Configuration
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -15,6 +16,9 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
     private AccessDeniedHandler accessDeniedHandler;
 
+	@Autowired
+	AfterLoginFilter afterLoginFilter;
+	
     // roles admin allow to access /admin/**
     // roles user allow to access /user/**
     // custom 403 access denied handler
@@ -26,7 +30,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 					.antMatchers("/admin/**").hasAnyRole("ADMIN")
 					.antMatchers("/user/**").hasAnyRole("USER")
 					.anyRequest().authenticated()
-                .and()
+                .and().addFilterAfter(afterLoginFilter, BasicAuthenticationFilter.class)
                 .formLogin()
 					.loginPage("/login")
 					.permitAll()
@@ -58,10 +62,16 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     public DriverManagerDataSource dataSource() {
         DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
         driverManagerDataSource.setDriverClassName("com.mysql.jdbc.Driver");
-        driverManagerDataSource.setUrl("jdbc:mysql://localhost:3306/acm");
+        driverManagerDataSource.setUrl("jdbc:mysql://localhost:3306/acm_schema");
         driverManagerDataSource.setUsername("root");
         driverManagerDataSource.setPassword("1234");
         return driverManagerDataSource;
     }
 	
+    /*
+    @Bean(name = "afterLoginFilter")
+    public AfterLoginFilter getAfterLoginFilter() {
+    	return new AfterLoginFilter();
+    }
+    */
 }
