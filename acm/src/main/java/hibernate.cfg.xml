@@ -11,16 +11,5 @@
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
         <property name="hibernate.search.autoregister_listeners">true</property>
         <property name="hibernate.validator.apply_to_ddl">false</property>
-        <mapping class="es.acm.entities.Lugar"/>
-        <mapping class="es.acm.entities.RelParticipanteTutor"/>
-        <mapping class="es.acm.entities.TipoActividad"/>
-        <mapping class="es.acm.entities.Participante"/>
-        <mapping class="es.acm.entities.TipoParentesco"/>
-        <mapping class="es.acm.entities.TipoCargoSocio"/>
-        <mapping class="es.acm.entities.Jornada"/>
-        <mapping class="es.acm.entities.Socio"/>
-        <mapping class="es.acm.entities.Tutor"/>
-        <mapping class="es.acm.entities.RelActividadParticipante"/>
-        <mapping class="es.acm.entities.Actividad"/>
     </session-factory>
 </hibernate-configuration>
