@@ -16,16 +16,18 @@ import org.springframework.web.filter.GenericFilterBean;
 @Component
 public class AfterLoginFilter extends GenericFilterBean {
  
-    @Override
-    public void doFilter(
-      ServletRequest request, 
-      ServletResponse response,
-      FilterChain chain) throws IOException, ServletException {
-    	   Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-           User user = (User) auth.getPrincipal();
-           System.out.println(user.getUsername());
-    	
-    	chain.doFilter(request, response);
+	@Override
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		if(auth != null) {
+			if(auth.getPrincipal() != null && auth.getPrincipal().getClass().equals(User.class)) {
+				User user = (User)auth.getPrincipal();
+				System.out.println(user.getUsername());
+			}
+			else
+				System.out.println(auth.getPrincipal());
+		}
+		chain.doFilter(request, response);
     }
 }
 

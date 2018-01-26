@@ -12,8 +12,8 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 @Configuration
-@Order(1)
-public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
+@Order(2)
+public class SpringSecurityConfig2 extends WebSecurityConfigurerAdapter {
 
 	@Autowired
     private AccessDeniedHandler accessDeniedHandler;
@@ -28,9 +28,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-					.antMatchers("/", "/home", "/about").permitAll()
-					.antMatchers("/admin/**").hasAnyRole("ADMIN")
-					.antMatchers("/user/**").hasAnyRole("USER")
+					.antMatchers("/administrador/**").hasAnyRole("ADMIN")
 					.anyRequest().authenticated()
                 .and().addFilterAfter(afterLoginFilter, BasicAuthenticationFilter.class)
                 .formLogin()
